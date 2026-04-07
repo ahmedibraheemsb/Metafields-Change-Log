@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Metafields Change Log</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600&display=swap');
+
+  :root {
+    --bg: #f5f5f0;
+    --surface: #ffffff;
+    --border: #e0ddd6;
+    --border-strong: #c8c4bc;
+    --text: #1a1a18;
+    --text-muted: #6b6860;
+    --accent: #1a1a18;
+    --accent-light: #f0ede8;
+    --red: #c0392b;
+    --red-light: #fdf0ee;
+    --green: #27ae60;
+    --green-light: #edf7f1;
+    --blue: #2563eb;
+    --blue-light: #eff6ff;
+    --tag-manual: #7c3aed;
+    --tag-manual-bg: #f5f3ff;
+    --tag-status: #0891b2;
+    --tag-status-bg: #ecfeff;
+    --tag-payment: #059669;
+    --tag-payment-bg: #ecfdf5;
+    --tag-courier: #d97706;
+    --tag-courier-bg: #fffbeb;
+    --mono: 'IBM Plex Mono', monospace;
+    --sans: 'IBM Plex Sans', sans-serif;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: var(--sans);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+    padding: 0;
+  }
+
+  /* Header */
+  .header {
+    background: var(--accent);
+    color: #fff;
+    padding: 18px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
+  }
+  .header-icon {
+    width: 32px; height: 32px;
+    background: rgba(255,255,255,0.15);
+    border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+  }
+  .header-title {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: 0.5px;
+  }
+  .header-subtitle {
+    font-size: 12px;
+    opacity: 0.5;
+    margin-left: auto;
+    font-family: var(--mono);
+  }
+
+  /* Config Panel */
+  .config-panel {
+    background: #1a1a18;
+    border-bottom: 1px solid #333;
+    padding: 12px 32px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .config-label {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+  .config-input {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: #2a2a28;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    width: 320px;
+    outline: none;
+  }
+  .config-input:focus { border-color: #666; }
+  .config-secret-input {
+    font-family: var(--mono);
+    font-size: 12px;
+    background: #2a2a28;
+    border: 1px solid #444;
+    color: #fff;
+    padding: 6px 10px;
+    border-radius: 4px;
+    width: 240px;
+    outline: none;
+  }
+  .config-secret-input:focus { border-color: #666; }
+
+  /* Main */
+  .main { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
+
+  /* Filters Bar */
+  .filters-bar {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 16px 20px;
+    display: flex;
+    gap: 12px;
+    align-items: flex-end;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+  }
+  .filter-group { display: flex; flex-direction: column; gap: 5px; }
+  .filter-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+  }
+  .filter-input {
+    font-family: var(--mono);
+    font-size: 13px;
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    padding: 7px 10px;
+    background: var(--bg);
+    color: var(--text);
+    outline: none;
+    min-width: 140px;
+  }
+  .filter-input:focus { border-color: var(--accent); background: var(--surface); }
+
+  .btn {
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 600;
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.15s;
+    letter-spacing: 0.3px;
+  }
+  .btn-primary {
+    background: var(--accent);
+    color: #fff;
+  }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary {
+    background: var(--accent-light);
+    color: var(--text);
+    border: 1px solid var(--border);
+  }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-danger {
+    background: var(--red-light);
+    color: var(--red);
+    border: 1px solid #f5c6c2;
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+  .btn-danger:hover { background: #fde8e6; }
+
+  /* Stats Row */
+  .stats-row {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 20px;
+    flex-wrap: wrap;
+  }
+  .stat-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 8px;
+    padding: 12px 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 120px;
+  }
+  .stat-value {
+    font-family: var(--mono);
+    font-size: 22px;
+    font-weight: 600;
+    color: var(--text);
+  }
+  .stat-label {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+  }
+
+  /* Table */
+  .table-wrap {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+  .table-header-row {
+    display: flex;
+    align-items: center;
+    padding: 14px 20px;
+    border-bottom: 1px solid var(--border);
+    gap: 12px;
+  }
+  .table-header-title {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .table-count {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    background: var(--accent-light);
+    padding: 2px 8px;
+    border-radius: 20px;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  thead th {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--text-muted);
+    font-weight: 600;
+    padding: 10px 16px;
+    text-align: left;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+  tbody tr {
+    border-bottom: 1px solid var(--border);
+    transition: background 0.1s;
+  }
+  tbody tr:last-child { border-bottom: none; }
+  tbody tr:hover { background: var(--accent-light); }
+  td {
+    padding: 11px 16px;
+    font-size: 13px;
+    vertical-align: middle;
+  }
+
+  .order-badge {
+    font-family: var(--mono);
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+
+  .key-badge {
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    padding: 3px 8px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .key-manual_status { color: var(--tag-manual); background: var(--tag-manual-bg); }
+  .key-status_2_r_e  { color: var(--tag-status);  background: var(--tag-status-bg); }
+  .key-payment       { color: var(--tag-payment); background: var(--tag-payment-bg); }
+  .key-courier       { color: var(--tag-courier); background: var(--tag-courier-bg); }
+
+  .value-cell {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--text);
+    max-width: 220px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .ts-cell {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    white-space: nowrap;
+  }
+  .ts-diff {
+    font-family: var(--mono);
+    font-size: 10px;
+    padding: 2px 6px;
+    border-radius: 4px;
+    white-space: nowrap;
+  }
+  .ts-diff.same { color: var(--green); background: var(--green-light); }
+  .ts-diff.diff { color: var(--red); background: var(--red-light); }
+
+  /* Empty / Loading */
+  .empty-state {
+    padding: 60px 20px;
+    text-align: center;
+    color: var(--text-muted);
+  }
+  .empty-icon { font-size: 40px; margin-bottom: 12px; }
+  .empty-text { font-family: var(--mono); font-size: 13px; }
+
+  .loading {
+    padding: 40px 20px;
+    text-align: center;
+    font-family: var(--mono);
+    font-size: 13px;
+    color: var(--text-muted);
+  }
+  .spinner {
+    display: inline-block;
+    width: 18px; height: 18px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    animation: spin 0.7s linear infinite;
+    vertical-align: middle;
+    margin-right: 8px;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* Toast */
+  .toast {
+    position: fixed;
+    bottom: 24px; right: 24px;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--mono);
+    font-size: 13px;
+    padding: 12px 20px;
+    border-radius: 8px;
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.2s;
+    pointer-events: none;
+    z-index: 999;
+  }
+  .toast.show { opacity: 1; transform: translateY(0); }
+  .toast.error { background: var(--red); }
+
+  /* Delete confirm modal */
+  .modal-overlay {
+    display: none;
+    position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4);
+    z-index: 200;
+    align-items: center;
+    justify-content: center;
+  }
+  .modal-overlay.show { display: flex; }
+  .modal {
+    background: var(--surface);
+    border-radius: 12px;
+    padding: 28px;
+    width: 380px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+  }
+  .modal-title {
+    font-family: var(--mono);
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+  .modal-body {
+    font-size: 13px;
+    color: var(--text-muted);
+    margin-bottom: 20px;
+    line-height: 1.6;
+  }
+  .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+
+  .section-divider {
+    font-family: var(--mono);
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--text-muted);
+    padding: 8px 16px;
+    background: var(--bg);
+    border-bottom: 1px solid var(--border);
+  }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-icon">📋</div>
+  <div class="header-title">Metafields Change Log</div>
+  <div class="header-subtitle" id="lastRefresh">—</div>
+</div>
+
+<div class="config-panel">
+  <span class="config-label">Worker URL</span>
+  <input class="config-input" id="workerUrl" type="text" placeholder="https://metafields-change-log-worker.ecommoda24.workers.dev" />
+  <span class="config-label">Secret</span>
+  <input class="config-secret-input" id="workerSecret" type="password" placeholder="WORKER_SECRET" />
+  <button class="btn btn-primary" onclick="loadLogs()">Load</button>
+</div>
+
+<div class="main">
+
+  <div class="filters-bar">
+    <div class="filter-group">
+      <span class="filter-label">Order Name / ID</span>
+      <input class="filter-input" id="filterOrder" type="text" placeholder="#37269" />
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Metafield Key</span>
+      <select class="filter-input" id="filterKey">
+        <option value="">All keys</option>
+        <option value="manual_status">manual_status</option>
+        <option value="status_2_r_e">status_2_r_e</option>
+        <option value="payment">payment</option>
+        <option value="courier">courier</option>
+      </select>
+    </div>
+    <div class="filter-group">
+      <span class="filter-label">Date</span>
+      <input class="filter-input" id="filterDate" type="date" />
+    </div>
+    <button class="btn btn-primary" onclick="loadLogs()">🔍 Search</button>
+    <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+    <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+      <button class="btn btn-secondary" onclick="loadLogs()">↻ Refresh</button>
+    </div>
+  </div>
+
+  <div class="stats-row" id="statsRow" style="display:none">
+    <div class="stat-card">
+      <span class="stat-value" id="statTotal">0</span>
+      <span class="stat-label">Total Entries</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="statOrders">0</span>
+      <span class="stat-label">Unique Orders</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-value" id="statDiff">0</span>
+      <span class="stat-label">Timestamp Diffs</span>
+    </div>
+  </div>
+
+  <div class="table-wrap">
+    <div class="table-header-row">
+      <span class="table-header-title">Log Entries</span>
+      <span class="table-count" id="tableCount">—</span>
+    </div>
+    <div id="tableBody">
+      <div class="empty-state">
+        <div class="empty-icon">📭</div>
+        <div class="empty-text">Enter worker URL and secret, then click Load</div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<!-- Toast -->
+<div class="toast" id="toast"></div>
+
+<!-- Delete Modal -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal">
+    <div class="modal-title">⚠️ Confirm Delete</div>
+    <div class="modal-body" id="modalBody">Are you sure you want to delete this entry?</div>
+    <div class="modal-actions">
+      <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
+      <button class="btn" style="background:var(--red);color:#fff;" id="modalConfirmBtn">Delete</button>
+    </div>
+  </div>
+</div>
+
+<script>
+let allEntries = [];
+let pendingDeleteFn = null;
+
+function getConfig() {
+  const url = document.getElementById('workerUrl').value.trim().replace(/\/$/, '');
+  const secret = document.getElementById('workerSecret').value.trim();
+  if (!url || !secret) { showToast('Enter worker URL and secret first', true); return null; }
+  return { url, secret };
+}
+
+async function loadLogs() {
+  const cfg = getConfig(); if (!cfg) return;
+
+  const order = document.getElementById('filterOrder').value.trim();
+  const key   = document.getElementById('filterKey').value;
+  const date  = document.getElementById('filterDate').value;
+
+  let qs = new URLSearchParams();
+  if (order) qs.set('orderId', order);
+  if (key)   qs.set('metafieldKey', key);
+  if (date)  qs.set('date', date);
+
+  document.getElementById('tableBody').innerHTML = `<div class="loading"><span class="spinner"></span>Loading...</div>`;
+
+  try {
+    const res = await fetch(`${cfg.url}/logs?${qs}`, {
+      headers: { 'x-worker-secret': cfg.secret }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    allEntries = data.entries || [];
+    renderTable(allEntries);
+    renderStats(allEntries);
+    document.getElementById('lastRefresh').textContent = 'Last refresh: ' + new Date().toLocaleTimeString('en-US', { hour12: false });
+  } catch (e) {
+    document.getElementById('tableBody').innerHTML = `<div class="empty-state"><div class="empty-icon">❌</div><div class="empty-text">Error: ${e.message}</div></div>`;
+    showToast('Failed to load: ' + e.message, true);
+  }
+}
+
+function renderTable(entries) {
+  document.getElementById('tableCount').textContent = entries.length + ' entries';
+
+  if (!entries.length) {
+    document.getElementById('tableBody').innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No entries found</div></div>`;
+    return;
+  }
+
+  // Group by order
+  const grouped = {};
+  for (const e of entries) {
+    if (!grouped[e.orderName]) grouped[e.orderName] = [];
+    grouped[e.orderName].push(e);
+  }
+
+  let html = `<table>
+    <thead><tr>
+      <th>Order</th>
+      <th>Metafield Key</th>
+      <th>New Value</th>
+      <th>Flow Timestamp</th>
+      <th>Worker Timestamp</th>
+      <th>Δ Diff</th>
+      <th></th>
+    </tr></thead>
+    <tbody>`;
+
+  for (const [orderName, rows] of Object.entries(grouped)) {
+    html += `<tr><td colspan="7" class="section-divider">${orderName} — ${rows.length} change${rows.length > 1 ? 's' : ''}</td></tr>`;
+    for (const e of rows) {
+      const diff = calcDiff(e.flowTimestamp, e.workerTimestamp);
+      html += `<tr>
+        <td><span class="order-badge">${e.orderName}</span></td>
+        <td><span class="key-badge key-${e.metafieldKey}">${e.metafieldKey}</span></td>
+        <td><span class="value-cell" title="${escHtml(e.newValue)}">${escHtml(e.newValue)}</span></td>
+        <td><span class="ts-cell">${e.flowTimestamp || '—'}</span></td>
+        <td><span class="ts-cell">${e.workerTimestamp}</span></td>
+        <td>${diff}</td>
+        <td>
+          <button class="btn btn-danger" onclick="confirmDelete('${escHtml(e._kvKey)}', '${escHtml(e.orderName)}', '${escHtml(e.metafieldKey)}')">Delete</button>
+        </td>
+      </tr>`;
+    }
+  }
+
+  html += `</tbody></table>`;
+  document.getElementById('tableBody').innerHTML = html;
+}
+
+function calcDiff(flowTs, workerTs) {
+  if (!flowTs || !workerTs) return '<span class="ts-diff diff">N/A</span>';
+  try {
+    const parse = s => {
+      // Format: YYYY-MM-DD - HH:MM:SS
+      const [datePart, timePart] = s.split(' - ');
+      return new Date(datePart + 'T' + timePart);
+    };
+    const f = parse(flowTs);
+    const w = parse(workerTs);
+    const diffSec = Math.round((w - f) / 1000);
+    if (Math.abs(diffSec) <= 2) return `<span class="ts-diff same">+${diffSec}s</span>`;
+    return `<span class="ts-diff diff">${diffSec > 0 ? '+' : ''}${diffSec}s</span>`;
+  } catch {
+    return '<span class="ts-diff diff">ERR</span>';
+  }
+}
+
+function renderStats(entries) {
+  if (!entries.length) { document.getElementById('statsRow').style.display = 'none'; return; }
+  document.getElementById('statsRow').style.display = 'flex';
+  document.getElementById('statTotal').textContent = entries.length;
+  const uniqueOrders = new Set(entries.map(e => e.orderId)).size;
+  document.getElementById('statOrders').textContent = uniqueOrders;
+  const diffs = entries.filter(e => {
+    if (!e.flowTimestamp) return false;
+    try {
+      const parse = s => { const [d,t] = s.split(' - '); return new Date(d+'T'+t); };
+      return Math.abs(Math.round((parse(e.workerTimestamp) - parse(e.flowTimestamp)) / 1000)) > 2;
+    } catch { return false; }
+  }).length;
+  document.getElementById('statDiff').textContent = diffs;
+}
+
+function confirmDelete(kvKey, orderName, metafieldKey) {
+  document.getElementById('modalBody').textContent = `Delete log entry for ${orderName} → ${metafieldKey}?`;
+  pendingDeleteFn = () => deleteEntry(kvKey);
+  document.getElementById('modalConfirmBtn').onclick = () => { pendingDeleteFn(); closeModal(); };
+  document.getElementById('modalOverlay').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modalOverlay').classList.remove('show');
+  pendingDeleteFn = null;
+}
+
+async function deleteEntry(kvKey) {
+  const cfg = getConfig(); if (!cfg) return;
+  try {
+    const res = await fetch(`${cfg.url}/log`, {
+      method: 'DELETE',
+      headers: { 'x-worker-secret': cfg.secret, 'Content-Type': 'application/json' },
+      body: JSON.stringify({ kvKey })
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    showToast('Entry deleted');
+    loadLogs();
+  } catch (e) {
+    showToast('Delete failed: ' + e.message, true);
+  }
+}
+
+function clearFilters() {
+  document.getElementById('filterOrder').value = '';
+  document.getElementById('filterKey').value = '';
+  document.getElementById('filterDate').value = '';
+  loadLogs();
+}
+
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast show' + (isError ? ' error' : '');
+  setTimeout(() => { t.className = 'toast'; }, 3000);
+}
+
+function escHtml(str) {
+  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+// Close modal on overlay click
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// Load saved config
+window.addEventListener('load', () => {
+  const saved = localStorage.getItem('mflog_config');
+  if (saved) {
+    try {
+      const { url, secret } = JSON.parse(saved);
+      if (url) document.getElementById('workerUrl').value = url;
+      if (secret) document.getElementById('workerSecret').value = secret;
+    } catch {}
+  }
+  document.getElementById('workerUrl').addEventListener('change', saveConfig);
+  document.getElementById('workerSecret').addEventListener('change', saveConfig);
+});
+
+function saveConfig() {
+  localStorage.setItem('mflog_config', JSON.stringify({
+    url: document.getElementById('workerUrl').value.trim(),
+    secret: document.getElementById('workerSecret').value.trim()
+  }));
+}
+</script>
+</body>
+</html>
