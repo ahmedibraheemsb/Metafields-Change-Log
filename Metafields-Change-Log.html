@@ -592,16 +592,23 @@ function renderTable(entries) {
   document.getElementById('tableBody').innerHTML = html;
 }
 
+function parseTs(s) {
+  if (!s) return null;
+  // Format 1: YYYY-MM-DD - HH:MM:SS
+  const m1 = s.match(/(\d{4}-\d{2}-\d{2}) - (\d{2}:\d{2}:\d{2})/);
+  if (m1) return new Date(m1[1] + 'T' + m1[2]);
+  // Format 2: MM/DD/YYYY, HH:MM:SS
+  const m2 = s.match(/(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}:\d{2}:\d{2})/);
+  if (m2) return new Date(`${m2[3]}-${m2[1]}-${m2[2]}T${m2[4]}`);
+  return null;
+}
+
 function calcDiff(flowTs, workerTs) {
   if (!flowTs || !workerTs) return '<span class="ts-diff diff">N/A</span>';
   try {
-    const parse = s => {
-      // Format: YYYY-MM-DD - HH:MM:SS
-      const [datePart, timePart] = s.split(' - ');
-      return new Date(datePart + 'T' + timePart);
-    };
-    const f = parse(flowTs);
-    const w = parse(workerTs);
+    const f = parseTs(flowTs);
+    const w = parseTs(workerTs);
+    if (!f || !w || isNaN(f) || isNaN(w)) return '<span class="ts-diff diff">ERR</span>';
     const diffSec = Math.round((w - f) / 1000);
     if (Math.abs(diffSec) <= 2) return `<span class="ts-diff same">+${diffSec}s</span>`;
     return `<span class="ts-diff diff">${diffSec > 0 ? '+' : ''}${diffSec}s</span>`;
