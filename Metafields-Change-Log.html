@@ -11,7 +11,6 @@
     --bg: #f5f5f0;
     --surface: #ffffff;
     --border: #e0ddd6;
-    --border-strong: #c8c4bc;
     --text: #1a1a18;
     --text-muted: #6b6860;
     --accent: #1a1a18;
@@ -20,10 +19,6 @@
     --red-light: #fdf0ee;
     --green: #27ae60;
     --green-light: #edf7f1;
-    --blue: #2563eb;
-    --blue-light: #eff6ff;
-    --orange: #d97706;
-    --orange-light: #fffbeb;
     --tag-manual: #7c3aed;
     --tag-manual-bg: #f5f3ff;
     --tag-status: #0891b2;
@@ -43,9 +38,9 @@
     background: var(--bg);
     color: var(--text);
     min-height: 100vh;
-    padding: 0;
   }
 
+  /* ── Header ── */
   .header {
     background: var(--accent);
     color: #fff;
@@ -64,19 +59,10 @@
     display: flex; align-items: center; justify-content: center;
     font-size: 16px;
   }
-  .header-title {
-    font-family: var(--mono);
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-  }
-  .header-subtitle {
-    font-size: 12px;
-    opacity: 0.5;
-    margin-left: auto;
-    font-family: var(--mono);
-  }
+  .header-title { font-family: var(--mono); font-size: 15px; font-weight: 600; letter-spacing: 0.5px; }
+  .header-subtitle { font-size: 12px; opacity: 0.5; margin-left: auto; font-family: var(--mono); }
 
+  /* ── Config Panel ── */
   .config-panel {
     background: #1a1a18;
     border-bottom: 1px solid #333;
@@ -86,180 +72,80 @@
     gap: 12px;
     flex-wrap: wrap;
   }
-  .config-label {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: #888;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-  }
+  .config-label { font-family: var(--mono); font-size: 11px; color: #888; text-transform: uppercase; letter-spacing: 1px; }
   .config-input {
-    font-family: var(--mono);
-    font-size: 12px;
-    background: #2a2a28;
-    border: 1px solid #444;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 4px;
-    width: 320px;
-    outline: none;
+    font-family: var(--mono); font-size: 12px;
+    background: #2a2a28; border: 1px solid #444; color: #fff;
+    padding: 6px 10px; border-radius: 4px; width: 320px; outline: none;
   }
   .config-input:focus { border-color: #666; }
   .config-secret-input {
-    font-family: var(--mono);
-    font-size: 12px;
-    background: #2a2a28;
-    border: 1px solid #444;
-    color: #fff;
-    padding: 6px 10px;
-    border-radius: 4px;
-    width: 240px;
-    outline: none;
+    font-family: var(--mono); font-size: 12px;
+    background: #2a2a28; border: 1px solid #444; color: #fff;
+    padding: 6px 10px; border-radius: 4px; width: 240px; outline: none;
   }
   .config-secret-input:focus { border-color: #666; }
+  .btn {
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    padding: 8px 16px; border-radius: 6px; border: none; cursor: pointer;
+    transition: all 0.15s; letter-spacing: 0.3px;
+  }
+  .btn-primary { background: var(--accent); color: #fff; }
+  .btn-primary:hover { background: #333; }
+  .btn-secondary { background: var(--accent-light); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { background: var(--border); }
+  .btn-danger {
+    background: var(--red-light); color: var(--red);
+    border: 1px solid #f5c6c2; font-size: 11px; padding: 5px 12px;
+  }
+  .btn-danger:hover { background: #fde8e6; }
 
+  /* ── Main ── */
   .main { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
 
+  /* ── Filters Bar ── */
   .filters-bar {
     background: var(--surface);
     border: 1px solid var(--border);
     border-radius: 10px;
     padding: 16px 20px;
     display: flex;
-    gap: 12px;
+    gap: 16px;
     align-items: flex-end;
     flex-wrap: wrap;
     margin-bottom: 20px;
   }
-  .filter-group { display: flex; flex-direction: column; gap: 5px; }
+  .filter-group { display: flex; flex-direction: column; gap: 6px; }
   .filter-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-    font-weight: 600;
+    font-family: var(--mono); font-size: 10px;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text-muted); font-weight: 600;
   }
   .filter-input {
-    font-family: var(--mono);
-    font-size: 13px;
-    border: 1px solid var(--border);
-    border-radius: 6px;
-    padding: 7px 10px;
-    background: var(--bg);
-    color: var(--text);
-    outline: none;
-    min-width: 140px;
+    font-family: var(--mono); font-size: 13px;
+    border: 1px solid var(--border); border-radius: 6px;
+    padding: 8px 12px; background: var(--bg); color: var(--text);
+    outline: none; min-width: 160px; transition: border-color 0.15s;
   }
   .filter-input:focus { border-color: var(--accent); background: var(--surface); }
+  .filter-input.active { border-color: var(--accent); background: var(--surface); font-weight: 600; }
 
-  .btn {
-    font-family: var(--mono);
-    font-size: 12px;
-    font-weight: 600;
-    padding: 8px 16px;
-    border-radius: 6px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.15s;
-    letter-spacing: 0.3px;
+  .filter-hint {
+    font-family: var(--mono); font-size: 10px; color: var(--text-muted);
+    margin-top: 2px;
   }
-  .btn-primary { background: var(--accent); color: #fff; }
-  .btn-primary:hover { background: #333; }
-  .btn-secondary {
-    background: var(--accent-light);
-    color: var(--text);
-    border: 1px solid var(--border);
-  }
-  .btn-secondary:hover { background: var(--border); }
-  .btn-danger {
-    background: var(--red-light);
-    color: var(--red);
-    border: 1px solid #f5c6c2;
-    font-size: 11px;
-    padding: 5px 10px;
-  }
-  .btn-danger:hover { background: #fde8e6; }
-  .btn-warning {
-    background: var(--orange-light);
-    color: var(--orange);
-    border: 1px solid #fcd34d;
-    font-size: 11px;
-    padding: 5px 10px;
-  }
-  .btn-warning:hover { background: #fef3c7; }
 
-  .stats-row {
-    display: flex;
-    gap: 12px;
-    margin-bottom: 20px;
-    flex-wrap: wrap;
-  }
+  /* ── Stats ── */
+  .stats-row { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
   .stat-card {
-    background: var(--surface);
-    border: 1px solid var(--border);
-    border-radius: 8px;
-    padding: 12px 18px;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-    min-width: 120px;
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 8px; padding: 12px 20px;
+    display: flex; flex-direction: column; gap: 2px; min-width: 120px;
   }
-  .stat-value {
-    font-family: var(--mono);
-    font-size: 22px;
-    font-weight: 600;
-    color: var(--text);
-  }
-  .stat-label {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    color: var(--text-muted);
-  }
+  .stat-value { font-family: var(--mono); font-size: 24px; font-weight: 600; }
+  .stat-label { font-family: var(--mono); font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); }
 
-  /* Migration Banner */
-  .migration-banner {
-    background: var(--orange-light);
-    border: 1px solid #fcd34d;
-    border-radius: 10px;
-    padding: 14px 20px;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    flex-wrap: wrap;
-  }
-  .migration-banner-text {
-    font-family: var(--mono);
-    font-size: 12px;
-    color: var(--orange);
-    flex: 1;
-  }
-  .migration-progress {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    margin-top: 6px;
-  }
-  .migration-bar-wrap {
-    width: 100%;
-    height: 4px;
-    background: #fcd34d;
-    border-radius: 2px;
-    margin-top: 8px;
-    overflow: hidden;
-    display: none;
-  }
-  .migration-bar {
-    height: 100%;
-    background: var(--orange);
-    border-radius: 2px;
-    transition: width 0.3s;
-    width: 0%;
-  }
-
+  /* ── Table ── */
   .table-wrap {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -267,181 +153,131 @@
     overflow: hidden;
   }
   .table-header-row {
-    display: flex;
-    align-items: center;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border);
-    gap: 12px;
+    display: flex; align-items: center;
+    padding: 14px 20px; border-bottom: 1px solid var(--border); gap: 12px;
   }
-  .table-header-title {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
-  }
+  .table-header-title { font-family: var(--mono); font-size: 13px; font-weight: 600; }
   .table-count {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    background: var(--accent-light);
-    padding: 2px 8px;
-    border-radius: 20px;
+    font-family: var(--mono); font-size: 11px; color: var(--text-muted);
+    background: var(--accent-light); padding: 2px 8px; border-radius: 20px;
   }
 
   table { width: 100%; border-collapse: collapse; }
+
   thead th {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+    font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 1px;
+    color: var(--text-muted); font-weight: 600;
+    padding: 12px 16px; text-align: left;
+    background: #fafaf8;
+    border-bottom: 2px solid var(--border);
+    white-space: nowrap;
+  }
+
+  /* Group divider row */
+  .section-divider td {
+    font-family: var(--mono); font-size: 11px;
+    text-transform: uppercase; letter-spacing: 2px;
     color: var(--text-muted);
-    font-weight: 600;
-    padding: 10px 16px;
-    text-align: left;
+    padding: 8px 16px;
     background: var(--bg);
     border-bottom: 1px solid var(--border);
+    border-top: 2px solid var(--border);
   }
-  tbody tr {
+
+  tbody tr.data-row {
     border-bottom: 1px solid var(--border);
     transition: background 0.1s;
   }
-  tbody tr:last-child { border-bottom: none; }
-  tbody tr:hover { background: var(--accent-light); }
-  td { padding: 11px 16px; font-size: 13px; vertical-align: middle; }
+  tbody tr.data-row:last-child { border-bottom: none; }
+  tbody tr.data-row:hover { background: #fafaf8; }
 
+  td { padding: 13px 16px; vertical-align: middle; }
+
+  /* Order badge */
   .order-badge {
-    font-family: var(--mono);
-    font-size: 13px;
-    font-weight: 600;
+    font-family: var(--mono); font-size: 14px; font-weight: 700;
     color: var(--accent);
-    background: var(--accent-light);
-    padding: 3px 8px;
-    border-radius: 4px;
     white-space: nowrap;
   }
+
+  /* Key badge */
   .key-badge {
-    font-family: var(--mono);
-    font-size: 11px;
-    font-weight: 500;
-    padding: 3px 8px;
-    border-radius: 4px;
-    white-space: nowrap;
+    font-family: var(--mono); font-size: 12px; font-weight: 600;
+    padding: 4px 10px; border-radius: 5px; white-space: nowrap;
   }
   .key-manual_status { color: var(--tag-manual); background: var(--tag-manual-bg); }
   .key-status_2_r_e  { color: var(--tag-status);  background: var(--tag-status-bg); }
   .key-payment       { color: var(--tag-payment); background: var(--tag-payment-bg); }
   .key-courier       { color: var(--tag-courier); background: var(--tag-courier-bg); }
 
+  /* Value */
   .value-cell {
-    font-family: var(--mono);
-    font-size: 12px;
+    font-family: var(--mono); font-size: 13px; font-weight: 500;
     color: var(--text);
-    max-width: 220px;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+    max-width: 240px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
   }
-  .ts-cell {
-    font-family: var(--mono);
-    font-size: 11px;
-    color: var(--text-muted);
-    white-space: nowrap;
-  }
-  .ts-diff {
-    font-family: var(--mono);
-    font-size: 10px;
-    padding: 2px 6px;
-    border-radius: 4px;
-    white-space: nowrap;
-  }
-  .ts-diff.same { color: var(--green); background: var(--green-light); }
-  .ts-diff.diff { color: var(--red); background: var(--red-light); }
 
-  .empty-state {
-    padding: 60px 20px;
-    text-align: center;
-    color: var(--text-muted);
+  /* Timestamp — split into date + time */
+  .ts-date {
+    font-family: var(--mono); font-size: 14px; font-weight: 600;
+    color: var(--text);
+    white-space: nowrap;
   }
-  .empty-icon { font-size: 40px; margin-bottom: 12px; }
-  .empty-text { font-family: var(--mono); font-size: 13px; }
+  .ts-time {
+    font-family: var(--mono); font-size: 15px; font-weight: 700;
+    color: var(--accent);
+    white-space: nowrap;
+    letter-spacing: 0.5px;
+  }
+
+  /* Empty / Loading */
+  .empty-state { padding: 80px 20px; text-align: center; color: var(--text-muted); }
+  .empty-icon { font-size: 48px; margin-bottom: 16px; }
+  .empty-text { font-family: var(--mono); font-size: 13px; line-height: 1.8; }
 
   .loading {
-    padding: 40px 20px;
-    text-align: center;
-    font-family: var(--mono);
-    font-size: 13px;
-    color: var(--text-muted);
+    padding: 60px 20px; text-align: center;
+    font-family: var(--mono); font-size: 13px; color: var(--text-muted);
   }
   .spinner {
-    display: inline-block;
-    width: 18px; height: 18px;
-    border: 2px solid var(--border);
-    border-top-color: var(--accent);
-    border-radius: 50%;
-    animation: spin 0.7s linear infinite;
-    vertical-align: middle;
-    margin-right: 8px;
+    display: inline-block; width: 20px; height: 20px;
+    border: 2px solid var(--border); border-top-color: var(--accent);
+    border-radius: 50%; animation: spin 0.7s linear infinite;
+    vertical-align: middle; margin-right: 10px;
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
+  /* Toast */
   .toast {
-    position: fixed;
-    bottom: 24px; right: 24px;
-    background: var(--accent);
-    color: #fff;
-    font-family: var(--mono);
-    font-size: 13px;
-    padding: 12px 20px;
-    border-radius: 8px;
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.2s;
-    pointer-events: none;
-    z-index: 999;
+    position: fixed; bottom: 24px; right: 24px;
+    background: var(--accent); color: #fff;
+    font-family: var(--mono); font-size: 13px;
+    padding: 12px 20px; border-radius: 8px;
+    opacity: 0; transform: translateY(10px);
+    transition: all 0.2s; pointer-events: none; z-index: 999;
   }
   .toast.show { opacity: 1; transform: translateY(0); }
   .toast.error { background: var(--red); }
-  .toast.success { background: var(--green); }
 
+  /* Delete Modal */
   .modal-overlay {
-    display: none;
-    position: fixed; inset: 0;
-    background: rgba(0,0,0,0.4);
-    z-index: 200;
-    align-items: center;
-    justify-content: center;
+    display: none; position: fixed; inset: 0;
+    background: rgba(0,0,0,0.4); z-index: 200;
+    align-items: center; justify-content: center;
   }
   .modal-overlay.show { display: flex; }
   .modal {
-    background: var(--surface);
-    border-radius: 12px;
-    padding: 28px;
-    width: 380px;
+    background: var(--surface); border-radius: 12px;
+    padding: 28px; width: 380px;
     box-shadow: 0 20px 60px rgba(0,0,0,0.2);
   }
-  .modal-title {
-    font-family: var(--mono);
-    font-size: 15px;
-    font-weight: 600;
-    margin-bottom: 10px;
-  }
-  .modal-body {
-    font-size: 13px;
-    color: var(--text-muted);
-    margin-bottom: 20px;
-    line-height: 1.6;
-  }
+  .modal-title { font-family: var(--mono); font-size: 15px; font-weight: 600; margin-bottom: 10px; }
+  .modal-body { font-size: 13px; color: var(--text-muted); margin-bottom: 20px; line-height: 1.6; }
   .modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
 
-  .section-divider {
-    font-family: var(--mono);
-    font-size: 10px;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--text-muted);
-    padding: 8px 16px;
-    background: var(--bg);
-    border-bottom: 1px solid var(--border);
-  }
+  /* Refresh btn align */
+  .filters-actions { margin-left: auto; display: flex; align-items: flex-end; }
 </style>
 </head>
 <body>
@@ -462,26 +298,11 @@
 
 <div class="main">
 
-  <!-- ⚠️ MIGRATION BANNER — احذف الـ div ده بعد ما تخلص من الـ migration -->
-  <div class="migration-banner" id="migrationBanner">
-    <div style="flex:1">
-      <div class="migration-banner-text">
-        ⚠️ <strong>Migration مطلوبة:</strong> الـ entries القديمة محتاجة تعمل ordermap حتى يشتغل البحث بالـ order name.
-        اضغط "Run Migration" مرة واحدة بس.
-      </div>
-      <div class="migration-progress" id="migrationProgress"></div>
-      <div class="migration-bar-wrap" id="migrationBarWrap">
-        <div class="migration-bar" id="migrationBar"></div>
-      </div>
-    </div>
-    <button class="btn btn-warning" id="migrateBtn" onclick="runMigration()">▶ Run Migration</button>
-  </div>
-  <!-- END MIGRATION BANNER -->
-
   <div class="filters-bar">
     <div class="filter-group">
       <span class="filter-label">Order Name / ID</span>
-      <input class="filter-input" id="filterOrder" type="text" placeholder="#37269" />
+      <input class="filter-input" id="filterOrder" type="text" placeholder="#37926" />
+      <span class="filter-hint">اضغط Enter للبحث</span>
     </div>
     <div class="filter-group">
       <span class="filter-label">Metafield Key</span>
@@ -497,9 +318,9 @@
       <span class="filter-label">Date</span>
       <input class="filter-input" id="filterDate" type="date" />
     </div>
-    <button class="btn btn-primary" onclick="loadLogs()">🔍 Search</button>
-    <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
-    <div style="margin-left:auto; display:flex; gap:8px; align-items:center;">
+    <div class="filters-actions">
+      <button class="btn btn-secondary" onclick="clearFilters()">Clear</button>
+      &nbsp;
       <button class="btn btn-secondary" onclick="loadLogs()">↻ Refresh</button>
     </div>
   </div>
@@ -513,10 +334,6 @@
       <span class="stat-value" id="statOrders">0</span>
       <span class="stat-label">Unique Orders</span>
     </div>
-    <div class="stat-card">
-      <span class="stat-value" id="statDiff">0</span>
-      <span class="stat-label">Timestamp Diffs</span>
-    </div>
   </div>
 
   <div class="table-wrap">
@@ -526,8 +343,8 @@
     </div>
     <div id="tableBody">
       <div class="empty-state">
-        <div class="empty-icon">📭</div>
-        <div class="empty-text">Enter worker URL and secret, then click Load</div>
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">اختر فلتر للبحث<br>رقم الأوردر أو الـ Key أو التاريخ</div>
       </div>
     </div>
   </div>
@@ -539,7 +356,7 @@
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-title">⚠️ Confirm Delete</div>
-    <div class="modal-body" id="modalBody">Are you sure you want to delete this entry?</div>
+    <div class="modal-body" id="modalBody"></div>
     <div class="modal-actions">
       <button class="btn btn-secondary" onclick="closeModal()">Cancel</button>
       <button class="btn" style="background:var(--red);color:#fff;" id="modalConfirmBtn">Delete</button>
@@ -548,7 +365,6 @@
 </div>
 
 <script>
-let allEntries = [];
 let pendingDeleteFn = null;
 
 function getConfig() {
@@ -558,32 +374,46 @@ function getConfig() {
   return { url, secret };
 }
 
-// ─── Normalize order input ────────────────────────────────────────────────────
-// لو المستخدم كتب رقم مختصر بدون # (زي 37926) نضيف # تلقائياً
-// لو كتب numeric ID طويل (13 رقم) نسيبه كما هو
-function normalizeOrderInput(value) {
-  if (!value) return '';
-  value = value.trim();
-  // لو كله أرقام وأقل من 10 أرقام → order number → أضف #
-  if (/^\d+$/.test(value) && value.length < 10) {
-    return '#' + value;
-  }
-  return value;
+// Normalize: 37926 → #37926, #37926 → #37926, long numeric ID → as-is
+function normalizeOrder(val) {
+  if (!val) return '';
+  val = val.trim();
+  if (/^\d+$/.test(val) && val.length < 10) return '#' + val;
+  return val;
 }
+
+// ─── Load ─────────────────────────────────────────────────────────────────────
 
 async function loadLogs() {
   const cfg = getConfig(); if (!cfg) return;
 
-  let order = normalizeOrderInput(document.getElementById('filterOrder').value);
+  const order = normalizeOrder(document.getElementById('filterOrder').value);
   const key   = document.getElementById('filterKey').value;
   const date  = document.getElementById('filterDate').value;
 
-  let qs = new URLSearchParams();
+  // يجب وجود فلتر واحد على الأقل
+  if (!order && !key && !date) {
+    document.getElementById('tableBody').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">اختر فلتر للبحث<br>رقم الأوردر أو الـ Key أو التاريخ</div>
+      </div>`;
+    document.getElementById('tableCount').textContent = '—';
+    document.getElementById('statsRow').style.display = 'none';
+    return;
+  }
+
+  // Update filter input visual
+  document.getElementById('filterOrder').classList.toggle('active', !!order);
+  document.getElementById('filterKey').classList.toggle('active', !!key);
+  document.getElementById('filterDate').classList.toggle('active', !!date);
+
+  document.getElementById('tableBody').innerHTML = `<div class="loading"><span class="spinner"></span>Loading...</div>`;
+
+  const qs = new URLSearchParams();
   if (order) qs.set('orderId', order);
   if (key)   qs.set('metafieldKey', key);
   if (date)  qs.set('date', date);
-
-  document.getElementById('tableBody').innerHTML = `<div class="loading"><span class="spinner"></span>Loading...</div>`;
 
   try {
     const res = await fetch(`${cfg.url}/logs?${qs}`, {
@@ -591,116 +421,44 @@ async function loadLogs() {
     });
     if (!res.ok) throw new Error(`HTTP ${res.status}`);
     const data = await res.json();
-    allEntries = data.entries || [];
-    renderTable(allEntries);
-    renderStats(allEntries);
+    const entries = data.entries || [];
+    renderTable(entries);
+    renderStats(entries);
     document.getElementById('lastRefresh').textContent = 'Last refresh: ' + new Date().toLocaleTimeString('en-US', { hour12: false });
   } catch (e) {
     document.getElementById('tableBody').innerHTML = `<div class="empty-state"><div class="empty-icon">❌</div><div class="empty-text">Error: ${e.message}</div></div>`;
-    showToast('Failed to load: ' + e.message, true);
+    showToast('Failed: ' + e.message, true);
   }
 }
 
-// ─── Migration ────────────────────────────────────────────────────────────────
-// يمشي على كل الـ log entries ويبني ordermap لكل order name
-// بيشتغل بـ batches عشان ميتجاوزش الـ limits
+// ─── Render ───────────────────────────────────────────────────────────────────
 
-async function runMigration() {
-  const cfg = getConfig(); if (!cfg) return;
-
-  const btn = document.getElementById('migrateBtn');
-  btn.disabled = true;
-  btn.textContent = '⏳ Running...';
-
-  const progressEl = document.getElementById('migrationProgress');
-  const barWrap = document.getElementById('migrationBarWrap');
-  const bar = document.getElementById('migrationBar');
-  barWrap.style.display = 'block';
-
-  try {
-    // Step 1: جيب كل الـ log entries بدون filter
-    progressEl.textContent = 'جاري جلب كل الـ entries...';
-
-    const res = await fetch(`${cfg.url}/logs`, {
-      headers: { 'x-worker-secret': cfg.secret }
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-    const data = await res.json();
-    const entries = data.entries || [];
-
-    if (!entries.length) {
-      progressEl.textContent = 'مفيش entries للـ migration.';
-      btn.textContent = '✅ Done';
-      return;
-    }
-
-    // Step 2: استخرج unique order mappings
-    const mappings = {}; // { orderName: numericId }
-    for (const e of entries) {
-      if (e.orderName && e.orderId) {
-        mappings[e.orderName] = e.orderId;
-      }
-    }
-
-    const keys = Object.keys(mappings);
-    progressEl.textContent = `وجد ${keys.length} order mapping — جاري الكتابة...`;
-
-    // Step 3: اكتب الـ mappings بـ batches عشان ميضغطش على الـ Worker
-    const BATCH_SIZE = 20;
-    let done = 0;
-
-    for (let i = 0; i < keys.length; i += BATCH_SIZE) {
-      const batch = keys.slice(i, i + BATCH_SIZE);
-
-      // بعت كل mapping في الـ batch
-      await Promise.all(batch.map(orderName =>
-        fetch(`${cfg.url}/ordermap`, {
-          method: 'POST',
-          headers: {
-            'x-worker-secret': cfg.secret,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ orderName, orderId: mappings[orderName] })
-        })
-      ));
-
-      done += batch.length;
-      const pct = Math.round((done / keys.length) * 100);
-      bar.style.width = pct + '%';
-      progressEl.textContent = `${done} / ${keys.length} orders (${pct}%)`;
-
-      // استنى شوية بين الـ batches
-      if (i + BATCH_SIZE < keys.length) {
-        await new Promise(r => setTimeout(r, 300));
-      }
-    }
-
-    progressEl.textContent = `✅ Migration اتمت! ${keys.length} order mappings اتكتبت.`;
-    btn.textContent = '✅ Done';
-    showToast('Migration completed! ' + keys.length + ' mappings written.', false, true);
-
-  } catch (e) {
-    progressEl.textContent = '❌ Error: ' + e.message;
-    btn.disabled = false;
-    btn.textContent = '▶ Retry';
-    showToast('Migration failed: ' + e.message, true);
-  }
+function parseFlowTs(ts) {
+  // Format: "2026-04-13 - 14:46:28"
+  if (!ts) return { date: '—', time: '—' };
+  const m = ts.match(/(\d{4}-\d{2}-\d{2})\s*-\s*(\d{2}:\d{2}:\d{2})/);
+  if (m) return { date: m[1], time: m[2] };
+  return { date: ts, time: '' };
 }
-
-// ─── Table render ─────────────────────────────────────────────────────────────
 
 function renderTable(entries) {
   document.getElementById('tableCount').textContent = entries.length + ' entries';
 
   if (!entries.length) {
-    document.getElementById('tableBody').innerHTML = `<div class="empty-state"><div class="empty-icon">🔍</div><div class="empty-text">No entries found</div></div>`;
+    document.getElementById('tableBody').innerHTML = `
+      <div class="empty-state">
+        <div class="empty-icon">🔍</div>
+        <div class="empty-text">No entries found</div>
+      </div>`;
     return;
   }
 
+  // Group by orderName
   const grouped = {};
   for (const e of entries) {
-    if (!grouped[e.orderName]) grouped[e.orderName] = [];
-    grouped[e.orderName].push(e);
+    const k = e.orderName || e.orderId;
+    if (!grouped[k]) grouped[k] = [];
+    grouped[k].push(e);
   }
 
   let html = `<table>
@@ -708,27 +466,23 @@ function renderTable(entries) {
       <th>Order</th>
       <th>Metafield Key</th>
       <th>New Value</th>
-      <th>Flow Timestamp</th>
-      <th>Worker Timestamp</th>
-      <th>Δ Diff</th>
+      <th>Date</th>
+      <th>Time</th>
       <th></th>
     </tr></thead>
     <tbody>`;
 
   for (const [orderName, rows] of Object.entries(grouped)) {
-    html += `<tr><td colspan="7" class="section-divider">${orderName} — ${rows.length} change${rows.length > 1 ? 's' : ''}</td></tr>`;
+    html += `<tr class="section-divider"><td colspan="6">${orderName} — ${rows.length} change${rows.length > 1 ? 's' : ''}</td></tr>`;
     for (const e of rows) {
-      const diff = calcDiff(e.flowTimestamp, e.workerTimestamp);
-      html += `<tr>
-        <td><span class="order-badge">${e.orderName}</span></td>
+      const { date, time } = parseFlowTs(e.flowTimestamp);
+      html += `<tr class="data-row">
+        <td><span class="order-badge">${escHtml(e.orderName)}</span></td>
         <td><span class="key-badge key-${e.metafieldKey}">${e.metafieldKey}</span></td>
         <td><span class="value-cell" title="${escHtml(e.newValue)}">${escHtml(e.newValue)}</span></td>
-        <td><span class="ts-cell">${e.flowTimestamp || '—'}</span></td>
-        <td><span class="ts-cell">${e.workerTimestamp}</span></td>
-        <td>${diff}</td>
-        <td>
-          <button class="btn btn-danger" onclick="confirmDelete('${escHtml(e._kvKey)}', '${escHtml(e.orderName)}', '${escHtml(e.metafieldKey)}')">Delete</button>
-        </td>
+        <td><span class="ts-date">${escHtml(date)}</span></td>
+        <td><span class="ts-time">${escHtml(time)}</span></td>
+        <td><button class="btn btn-danger" onclick="confirmDelete('${escHtml(e._kvKey)}','${escHtml(e.orderName)}','${escHtml(e.metafieldKey)}')">Delete</button></td>
       </tr>`;
     }
   }
@@ -737,45 +491,14 @@ function renderTable(entries) {
   document.getElementById('tableBody').innerHTML = html;
 }
 
-function parseTs(s) {
-  if (!s) return null;
-  const m1 = s.match(/(\d{4}-\d{2}-\d{2}) - (\d{2}:\d{2}:\d{2})/);
-  if (m1) return new Date(m1[1] + 'T' + m1[2]);
-  const m2 = s.match(/(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}:\d{2}:\d{2})/);
-  if (m2) return new Date(`${m2[3]}-${m2[1]}-${m2[2]}T${m2[4]}`);
-  return null;
-}
-
-function calcDiff(flowTs, workerTs) {
-  if (!flowTs || !workerTs) return '<span class="ts-diff diff">N/A</span>';
-  try {
-    const f = parseTs(flowTs);
-    const w = parseTs(workerTs);
-    if (!f || !w || isNaN(f) || isNaN(w)) return '<span class="ts-diff diff">ERR</span>';
-    const diffSec = Math.round((w - f) / 1000);
-    if (Math.abs(diffSec) <= 2) return `<span class="ts-diff same">+${diffSec}s</span>`;
-    return `<span class="ts-diff diff">${diffSec > 0 ? '+' : ''}${diffSec}s</span>`;
-  } catch {
-    return '<span class="ts-diff diff">ERR</span>';
-  }
-}
-
 function renderStats(entries) {
   if (!entries.length) { document.getElementById('statsRow').style.display = 'none'; return; }
   document.getElementById('statsRow').style.display = 'flex';
   document.getElementById('statTotal').textContent = entries.length;
-  const uniqueOrders = new Set(entries.map(e => e.orderId)).size;
-  document.getElementById('statOrders').textContent = uniqueOrders;
-  const diffs = entries.filter(e => {
-    if (!e.flowTimestamp) return false;
-    try {
-      const f = parseTs(e.flowTimestamp);
-      const w = parseTs(e.workerTimestamp);
-      return Math.abs(Math.round((w - f) / 1000)) > 2;
-    } catch { return false; }
-  }).length;
-  document.getElementById('statDiff').textContent = diffs;
+  document.getElementById('statOrders').textContent = new Set(entries.map(e => e.orderId)).size;
 }
+
+// ─── Delete ───────────────────────────────────────────────────────────────────
 
 function confirmDelete(kvKey, orderName, metafieldKey) {
   document.getElementById('modalBody').textContent = `Delete log entry for ${orderName} → ${metafieldKey}?`;
@@ -805,27 +528,58 @@ async function deleteEntry(kvKey) {
   }
 }
 
+// ─── Clear filters ────────────────────────────────────────────────────────────
+
 function clearFilters() {
   document.getElementById('filterOrder').value = '';
   document.getElementById('filterKey').value = '';
   document.getElementById('filterDate').value = '';
-  loadLogs();
+  document.getElementById('filterOrder').classList.remove('active');
+  document.getElementById('filterKey').classList.remove('active');
+  document.getElementById('filterDate').classList.remove('active');
+  document.getElementById('tableBody').innerHTML = `
+    <div class="empty-state">
+      <div class="empty-icon">🔍</div>
+      <div class="empty-text">اختر فلتر للبحث<br>رقم الأوردر أو الـ Key أو التاريخ</div>
+    </div>`;
+  document.getElementById('tableCount').textContent = '—';
+  document.getElementById('statsRow').style.display = 'none';
 }
 
-function showToast(msg, isError = false, isSuccess = false) {
+// ─── Event listeners ──────────────────────────────────────────────────────────
+
+// Order input: بحث عند ضغط Enter
+document.getElementById('filterOrder').addEventListener('keydown', e => {
+  if (e.key === 'Enter') loadLogs();
+});
+
+// Key select: بحث تلقائي عند التغيير
+document.getElementById('filterKey').addEventListener('change', () => loadLogs());
+
+// Date: بحث تلقائي عند التغيير
+document.getElementById('filterDate').addEventListener('change', () => loadLogs());
+
+// Modal close on overlay click
+document.getElementById('modalOverlay').addEventListener('click', function(e) {
+  if (e.target === this) closeModal();
+});
+
+// ─── Helpers ──────────────────────────────────────────────────────────────────
+
+function showToast(msg, isError = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast show' + (isError ? ' error' : isSuccess ? ' success' : '');
+  t.className = 'toast show' + (isError ? ' error' : '');
   setTimeout(() => { t.className = 'toast'; }, 3000);
 }
 
 function escHtml(str) {
-  return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+  return String(str || '')
+    .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;')
+    .replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-document.getElementById('modalOverlay').addEventListener('click', function(e) {
-  if (e.target === this) closeModal();
-});
+// ─── Config persistence ───────────────────────────────────────────────────────
 
 window.addEventListener('load', () => {
   const saved = localStorage.getItem('mflog_config');
