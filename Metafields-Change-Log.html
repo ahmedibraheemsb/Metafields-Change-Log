@@ -22,6 +22,8 @@
     --green-light: #edf7f1;
     --blue: #2563eb;
     --blue-light: #eff6ff;
+    --orange: #d97706;
+    --orange-light: #fffbeb;
     --tag-manual: #7c3aed;
     --tag-manual-bg: #f5f3ff;
     --tag-status: #0891b2;
@@ -44,7 +46,6 @@
     padding: 0;
   }
 
-  /* Header */
   .header {
     background: var(--accent);
     color: #fff;
@@ -76,7 +77,6 @@
     font-family: var(--mono);
   }
 
-  /* Config Panel */
   .config-panel {
     background: #1a1a18;
     border-bottom: 1px solid #333;
@@ -118,10 +118,8 @@
   }
   .config-secret-input:focus { border-color: #666; }
 
-  /* Main */
   .main { padding: 24px 32px; max-width: 1400px; margin: 0 auto; }
 
-  /* Filters Bar */
   .filters-bar {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -166,10 +164,7 @@
     transition: all 0.15s;
     letter-spacing: 0.3px;
   }
-  .btn-primary {
-    background: var(--accent);
-    color: #fff;
-  }
+  .btn-primary { background: var(--accent); color: #fff; }
   .btn-primary:hover { background: #333; }
   .btn-secondary {
     background: var(--accent-light);
@@ -185,8 +180,15 @@
     padding: 5px 10px;
   }
   .btn-danger:hover { background: #fde8e6; }
+  .btn-warning {
+    background: var(--orange-light);
+    color: var(--orange);
+    border: 1px solid #fcd34d;
+    font-size: 11px;
+    padding: 5px 10px;
+  }
+  .btn-warning:hover { background: #fef3c7; }
 
-  /* Stats Row */
   .stats-row {
     display: flex;
     gap: 12px;
@@ -217,7 +219,47 @@
     color: var(--text-muted);
   }
 
-  /* Table */
+  /* Migration Banner */
+  .migration-banner {
+    background: var(--orange-light);
+    border: 1px solid #fcd34d;
+    border-radius: 10px;
+    padding: 14px 20px;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .migration-banner-text {
+    font-family: var(--mono);
+    font-size: 12px;
+    color: var(--orange);
+    flex: 1;
+  }
+  .migration-progress {
+    font-family: var(--mono);
+    font-size: 11px;
+    color: var(--text-muted);
+    margin-top: 6px;
+  }
+  .migration-bar-wrap {
+    width: 100%;
+    height: 4px;
+    background: #fcd34d;
+    border-radius: 2px;
+    margin-top: 8px;
+    overflow: hidden;
+    display: none;
+  }
+  .migration-bar {
+    height: 100%;
+    background: var(--orange);
+    border-radius: 2px;
+    transition: width 0.3s;
+    width: 0%;
+  }
+
   .table-wrap {
     background: var(--surface);
     border: 1px solid var(--border);
@@ -245,10 +287,7 @@
     border-radius: 20px;
   }
 
-  table {
-    width: 100%;
-    border-collapse: collapse;
-  }
+  table { width: 100%; border-collapse: collapse; }
   thead th {
     font-family: var(--mono);
     font-size: 10px;
@@ -267,11 +306,7 @@
   }
   tbody tr:last-child { border-bottom: none; }
   tbody tr:hover { background: var(--accent-light); }
-  td {
-    padding: 11px 16px;
-    font-size: 13px;
-    vertical-align: middle;
-  }
+  td { padding: 11px 16px; font-size: 13px; vertical-align: middle; }
 
   .order-badge {
     font-family: var(--mono);
@@ -283,7 +318,6 @@
     border-radius: 4px;
     white-space: nowrap;
   }
-
   .key-badge {
     font-family: var(--mono);
     font-size: 11px;
@@ -306,7 +340,6 @@
     text-overflow: ellipsis;
     white-space: nowrap;
   }
-
   .ts-cell {
     font-family: var(--mono);
     font-size: 11px;
@@ -323,7 +356,6 @@
   .ts-diff.same { color: var(--green); background: var(--green-light); }
   .ts-diff.diff { color: var(--red); background: var(--red-light); }
 
-  /* Empty / Loading */
   .empty-state {
     padding: 60px 20px;
     text-align: center;
@@ -351,7 +383,6 @@
   }
   @keyframes spin { to { transform: rotate(360deg); } }
 
-  /* Toast */
   .toast {
     position: fixed;
     bottom: 24px; right: 24px;
@@ -369,8 +400,8 @@
   }
   .toast.show { opacity: 1; transform: translateY(0); }
   .toast.error { background: var(--red); }
+  .toast.success { background: var(--green); }
 
-  /* Delete confirm modal */
   .modal-overlay {
     display: none;
     position: fixed; inset: 0;
@@ -431,6 +462,22 @@
 
 <div class="main">
 
+  <!-- ⚠️ MIGRATION BANNER — احذف الـ div ده بعد ما تخلص من الـ migration -->
+  <div class="migration-banner" id="migrationBanner">
+    <div style="flex:1">
+      <div class="migration-banner-text">
+        ⚠️ <strong>Migration مطلوبة:</strong> الـ entries القديمة محتاجة تعمل ordermap حتى يشتغل البحث بالـ order name.
+        اضغط "Run Migration" مرة واحدة بس.
+      </div>
+      <div class="migration-progress" id="migrationProgress"></div>
+      <div class="migration-bar-wrap" id="migrationBarWrap">
+        <div class="migration-bar" id="migrationBar"></div>
+      </div>
+    </div>
+    <button class="btn btn-warning" id="migrateBtn" onclick="runMigration()">▶ Run Migration</button>
+  </div>
+  <!-- END MIGRATION BANNER -->
+
   <div class="filters-bar">
     <div class="filter-group">
       <span class="filter-label">Order Name / ID</span>
@@ -487,10 +534,8 @@
 
 </div>
 
-<!-- Toast -->
 <div class="toast" id="toast"></div>
 
-<!-- Delete Modal -->
 <div class="modal-overlay" id="modalOverlay">
   <div class="modal">
     <div class="modal-title">⚠️ Confirm Delete</div>
@@ -513,10 +558,23 @@ function getConfig() {
   return { url, secret };
 }
 
+// ─── Normalize order input ────────────────────────────────────────────────────
+// لو المستخدم كتب رقم مختصر بدون # (زي 37926) نضيف # تلقائياً
+// لو كتب numeric ID طويل (13 رقم) نسيبه كما هو
+function normalizeOrderInput(value) {
+  if (!value) return '';
+  value = value.trim();
+  // لو كله أرقام وأقل من 10 أرقام → order number → أضف #
+  if (/^\d+$/.test(value) && value.length < 10) {
+    return '#' + value;
+  }
+  return value;
+}
+
 async function loadLogs() {
   const cfg = getConfig(); if (!cfg) return;
 
-  const order = document.getElementById('filterOrder').value.trim();
+  let order = normalizeOrderInput(document.getElementById('filterOrder').value);
   const key   = document.getElementById('filterKey').value;
   const date  = document.getElementById('filterDate').value;
 
@@ -543,6 +601,94 @@ async function loadLogs() {
   }
 }
 
+// ─── Migration ────────────────────────────────────────────────────────────────
+// يمشي على كل الـ log entries ويبني ordermap لكل order name
+// بيشتغل بـ batches عشان ميتجاوزش الـ limits
+
+async function runMigration() {
+  const cfg = getConfig(); if (!cfg) return;
+
+  const btn = document.getElementById('migrateBtn');
+  btn.disabled = true;
+  btn.textContent = '⏳ Running...';
+
+  const progressEl = document.getElementById('migrationProgress');
+  const barWrap = document.getElementById('migrationBarWrap');
+  const bar = document.getElementById('migrationBar');
+  barWrap.style.display = 'block';
+
+  try {
+    // Step 1: جيب كل الـ log entries بدون filter
+    progressEl.textContent = 'جاري جلب كل الـ entries...';
+
+    const res = await fetch(`${cfg.url}/logs`, {
+      headers: { 'x-worker-secret': cfg.secret }
+    });
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const data = await res.json();
+    const entries = data.entries || [];
+
+    if (!entries.length) {
+      progressEl.textContent = 'مفيش entries للـ migration.';
+      btn.textContent = '✅ Done';
+      return;
+    }
+
+    // Step 2: استخرج unique order mappings
+    const mappings = {}; // { orderName: numericId }
+    for (const e of entries) {
+      if (e.orderName && e.orderId) {
+        mappings[e.orderName] = e.orderId;
+      }
+    }
+
+    const keys = Object.keys(mappings);
+    progressEl.textContent = `وجد ${keys.length} order mapping — جاري الكتابة...`;
+
+    // Step 3: اكتب الـ mappings بـ batches عشان ميضغطش على الـ Worker
+    const BATCH_SIZE = 20;
+    let done = 0;
+
+    for (let i = 0; i < keys.length; i += BATCH_SIZE) {
+      const batch = keys.slice(i, i + BATCH_SIZE);
+
+      // بعت كل mapping في الـ batch
+      await Promise.all(batch.map(orderName =>
+        fetch(`${cfg.url}/ordermap`, {
+          method: 'POST',
+          headers: {
+            'x-worker-secret': cfg.secret,
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ orderName, orderId: mappings[orderName] })
+        })
+      ));
+
+      done += batch.length;
+      const pct = Math.round((done / keys.length) * 100);
+      bar.style.width = pct + '%';
+      progressEl.textContent = `${done} / ${keys.length} orders (${pct}%)`;
+
+      // استنى شوية بين الـ batches
+      if (i + BATCH_SIZE < keys.length) {
+        await new Promise(r => setTimeout(r, 300));
+      }
+    }
+
+    progressEl.textContent = `✅ Migration اتمت! ${keys.length} order mappings اتكتبت.`;
+    btn.textContent = '✅ Done';
+    showToast('Migration completed! ' + keys.length + ' mappings written.', false, true);
+
+  } catch (e) {
+    progressEl.textContent = '❌ Error: ' + e.message;
+    btn.disabled = false;
+    btn.textContent = '▶ Retry';
+    showToast('Migration failed: ' + e.message, true);
+  }
+}
+
+// ─── Table render ─────────────────────────────────────────────────────────────
+
 function renderTable(entries) {
   document.getElementById('tableCount').textContent = entries.length + ' entries';
 
@@ -551,7 +697,6 @@ function renderTable(entries) {
     return;
   }
 
-  // Group by order
   const grouped = {};
   for (const e of entries) {
     if (!grouped[e.orderName]) grouped[e.orderName] = [];
@@ -594,10 +739,8 @@ function renderTable(entries) {
 
 function parseTs(s) {
   if (!s) return null;
-  // Format 1: YYYY-MM-DD - HH:MM:SS
   const m1 = s.match(/(\d{4}-\d{2}-\d{2}) - (\d{2}:\d{2}:\d{2})/);
   if (m1) return new Date(m1[1] + 'T' + m1[2]);
-  // Format 2: MM/DD/YYYY, HH:MM:SS
   const m2 = s.match(/(\d{2})\/(\d{2})\/(\d{4}),?\s*(\d{2}:\d{2}:\d{2})/);
   if (m2) return new Date(`${m2[3]}-${m2[1]}-${m2[2]}T${m2[4]}`);
   return null;
@@ -626,8 +769,9 @@ function renderStats(entries) {
   const diffs = entries.filter(e => {
     if (!e.flowTimestamp) return false;
     try {
-      const parse = s => { const [d,t] = s.split(' - '); return new Date(d+'T'+t); };
-      return Math.abs(Math.round((parse(e.workerTimestamp) - parse(e.flowTimestamp)) / 1000)) > 2;
+      const f = parseTs(e.flowTimestamp);
+      const w = parseTs(e.workerTimestamp);
+      return Math.abs(Math.round((w - f) / 1000)) > 2;
     } catch { return false; }
   }).length;
   document.getElementById('statDiff').textContent = diffs;
@@ -668,10 +812,10 @@ function clearFilters() {
   loadLogs();
 }
 
-function showToast(msg, isError = false) {
+function showToast(msg, isError = false, isSuccess = false) {
   const t = document.getElementById('toast');
   t.textContent = msg;
-  t.className = 'toast show' + (isError ? ' error' : '');
+  t.className = 'toast show' + (isError ? ' error' : isSuccess ? ' success' : '');
   setTimeout(() => { t.className = 'toast'; }, 3000);
 }
 
@@ -679,12 +823,10 @@ function escHtml(str) {
   return String(str || '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
 }
 
-// Close modal on overlay click
 document.getElementById('modalOverlay').addEventListener('click', function(e) {
   if (e.target === this) closeModal();
 });
 
-// Load saved config
 window.addEventListener('load', () => {
   const saved = localStorage.getItem('mflog_config');
   if (saved) {
